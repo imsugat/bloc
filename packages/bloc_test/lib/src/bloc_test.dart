@@ -88,7 +88,7 @@ import 'package:test/test.dart' as test;
 void blocTest<B extends Bloc<Event, State>, Event, State>(
   String description, {
   @required B Function() build,
-  @required Iterable expect,
+  Iterable expect,
   Future<void> Function(B bloc) act,
   Duration wait,
   Future<void> Function() verify,
@@ -100,7 +100,7 @@ void blocTest<B extends Bloc<Event, State>, Event, State>(
     await act?.call(bloc);
     if (wait != null) await Future.delayed(wait);
     await bloc.close();
-    test.expect(states, expect);
+    if (expect != null) test.expect(states, expect);
     await subscription.cancel();
     await verify?.call();
   });
