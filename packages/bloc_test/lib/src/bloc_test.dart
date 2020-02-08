@@ -91,7 +91,7 @@ void blocTest<B extends Bloc<Event, State>, Event, State>(
   Iterable expect,
   Future<void> Function(B bloc) act,
   Duration wait,
-  Future<void> Function() verify,
+  Future<void> Function(B bloc) verify,
 }) {
   test.test(description, () async {
     final bloc = build();
@@ -102,6 +102,6 @@ void blocTest<B extends Bloc<Event, State>, Event, State>(
     await bloc.close();
     if (expect != null) test.expect(states, expect);
     await subscription.cancel();
-    await verify?.call();
+    await verify?.call(bloc);
   });
 }
