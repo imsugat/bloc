@@ -95,6 +95,7 @@ void blocTest<B extends Bloc<Event, State>, Event, State>(
 }) {
   test.test(description, () async {
     final bloc = await build();
+    await bloc.take(1).last;
     final states = <State>[];
     final subscription = bloc.listen(states.add);
     await act?.call(bloc);
