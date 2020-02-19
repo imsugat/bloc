@@ -57,13 +57,13 @@ void main() {
   group('blocTest', () {
     blocTest(
       'emits [0] when nothing is added',
-      build: () => CounterBloc(),
+      build: () async => CounterBloc(),
       expect: [0],
     );
 
     blocTest(
       'emits [0, 1] when CounterEvent.increment is added',
-      build: () => CounterBloc(),
+      build: () async => CounterBloc(),
       act: (bloc) => bloc.add(CounterEvent.increment),
       expect: [0, 1],
     );

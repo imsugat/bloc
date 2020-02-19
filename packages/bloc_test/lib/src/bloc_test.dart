@@ -87,14 +87,14 @@ import 'package:test/test.dart' as test;
 @isTest
 void blocTest<B extends Bloc<Event, State>, Event, State>(
   String description, {
-  @required B Function() build,
+  @required Future<B> Function() build,
   Iterable expect,
   Future<void> Function(B bloc) act,
   Duration wait,
   Future<void> Function(B bloc) verify,
 }) {
   test.test(description, () async {
-    final bloc = build();
+    final bloc = await build();
     final states = <State>[];
     final subscription = bloc.listen(states.add);
     await act?.call(bloc);

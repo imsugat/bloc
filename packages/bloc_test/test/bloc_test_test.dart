@@ -13,20 +13,20 @@ void main() {
     group('CounterBloc', () {
       blocTest(
         'emits [0] when nothing is added',
-        build: () => CounterBloc(),
+        build: () async => CounterBloc(),
         expect: [0],
       );
 
       blocTest(
         'emits [0, 1] when CounterEvent.increment is added',
-        build: () => CounterBloc(),
+        build: () async => CounterBloc(),
         act: (bloc) => bloc.add(CounterEvent.increment),
         expect: [0, 1],
       );
 
       blocTest(
         'emits [0, 1] when CounterEvent.increment is added with async act',
-        build: () => CounterBloc(),
+        build: () async => CounterBloc(),
         act: (bloc) async {
           await Future.delayed(Duration(seconds: 1));
           bloc.add(CounterEvent.increment);
@@ -37,7 +37,7 @@ void main() {
       blocTest(
         'emits [0, 1, 2] when CounterEvent.increment is called multiple times'
         'with async act',
-        build: () => CounterBloc(),
+        build: () async => CounterBloc(),
         act: (bloc) async {
           bloc.add(CounterEvent.increment);
           await Future.delayed(Duration(milliseconds: 10));
@@ -50,13 +50,13 @@ void main() {
     group('AsyncCounterBloc', () {
       blocTest(
         'emits [0] when nothing is added',
-        build: () => AsyncCounterBloc(),
+        build: () async => AsyncCounterBloc(),
         expect: [0],
       );
 
       blocTest(
         'emits [0, 1] when AsyncCounterEvent.increment is added',
-        build: () => AsyncCounterBloc(),
+        build: () async => AsyncCounterBloc(),
         act: (bloc) => bloc.add(AsyncCounterEvent.increment),
         expect: [0, 1],
       );
@@ -64,7 +64,7 @@ void main() {
       blocTest(
         'emits [0, 1, 2] when AsyncCounterEvent.increment is called multiple'
         'times with async act',
-        build: () => AsyncCounterBloc(),
+        build: () async => AsyncCounterBloc(),
         act: (bloc) async {
           bloc.add(AsyncCounterEvent.increment);
           await Future.delayed(Duration(milliseconds: 10));
@@ -77,13 +77,13 @@ void main() {
     group('DebounceCounterBloc', () {
       blocTest(
         'emits [0] when nothing is added',
-        build: () => DebounceCounterBloc(),
+        build: () async => DebounceCounterBloc(),
         expect: [0],
       );
 
       blocTest(
         'emits [0, 1] when DebounceCounterEvent.increment is added',
-        build: () => DebounceCounterBloc(),
+        build: () async => DebounceCounterBloc(),
         act: (bloc) => bloc.add(DebounceCounterEvent.increment),
         wait: const Duration(milliseconds: 300),
         expect: [0, 1],
@@ -93,13 +93,13 @@ void main() {
     group('MultiCounterBloc', () {
       blocTest(
         'emits [0] when nothing is added',
-        build: () => MultiCounterBloc(),
+        build: () async => MultiCounterBloc(),
         expect: [0],
       );
 
       blocTest(
         'emits [0, 1, 2] when MultiCounterEvent.increment is added',
-        build: () => MultiCounterBloc(),
+        build: () async => MultiCounterBloc(),
         act: (bloc) => bloc.add(MultiCounterEvent.increment),
         expect: [0, 1, 2],
       );
@@ -107,7 +107,7 @@ void main() {
       blocTest(
         'emits [0, 1, 2, 3, 4] when MultiCounterEvent.increment is called'
         'multiple times with async act',
-        build: () => MultiCounterBloc(),
+        build: () async => MultiCounterBloc(),
         act: (bloc) async {
           bloc.add(MultiCounterEvent.increment);
           await Future.delayed(Duration(milliseconds: 10));
@@ -120,13 +120,13 @@ void main() {
     group('ComplexBloc', () {
       blocTest(
         'emits [ComplexStateA] when nothing is added',
-        build: () => ComplexBloc(),
+        build: () async => ComplexBloc(),
         expect: [isA<ComplexStateA>()],
       );
 
       blocTest(
         'emits [ComplexStateA, ComplexStateB] when ComplexEventB is added',
-        build: () => ComplexBloc(),
+        build: () async => ComplexBloc(),
         act: (bloc) => bloc.add(ComplexEventB()),
         expect: [isA<ComplexStateA>(), isA<ComplexStateB>()],
       );
@@ -141,16 +141,16 @@ void main() {
 
       blocTest(
         'emits [0] when nothing is added',
-        build: () => SideEffectCounterBloc(repository),
+        build: () async => SideEffectCounterBloc(repository),
         expect: [0],
       );
 
       blocTest(
         'emits [0, 1] when SideEffectCounterEvent.increment is added',
-        build: () => SideEffectCounterBloc(repository),
+        build: () async => SideEffectCounterBloc(repository),
         act: (bloc) => bloc.add(SideEffectCounterEvent.increment),
         expect: [0, 1],
-        verify: () async {
+        verify: (_) async {
           verify(repository.sideEffect()).called(1);
         },
       );
